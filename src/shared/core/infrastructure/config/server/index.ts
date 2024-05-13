@@ -35,10 +35,10 @@ class App {
     this.server.use(express.json());  
     this.server.use(express.urlencoded({ extended: true }));
     this.server.use(cors());
-    this.server.use(GlobalErrorHandler);
     this.server.use('/api/', this.appRoutes.routes());
     this.server.use('/api/products/', this.productRoutes.routes());
     this.server.use('/api/users/', this.userRoutes.routes());
+    this.server.use(GlobalErrorHandler);
   }
 }
 

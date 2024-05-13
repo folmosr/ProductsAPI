@@ -19,16 +19,16 @@ export class ProductController implements IController<Product> {
     update =  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         const id = Number.parseInt(req.params.id, 10);
         if(isNaN(id)) {
-            res.status(httpStatus.BAD_REQUEST).send('a valid identifier is needed');
+            res.status(httpStatus.BAD_REQUEST).send({message:'a valid identifier is needed'});
         }
         this._service.update(id, req.body)
-        .then(r =>res.status(httpStatus.CREATED).send(`rows affected ${r}`))
+        .then(r =>res.status(httpStatus.CREATED).send({message: `rows affected ${r}` }))
         .catch(next);   
     }
 
     public create =  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         this._service.create(req.body)
-        .then(r =>res.status(httpStatus.CREATED).send(`resource SKU: ${ r.SKU } and Barcode: ${ r.barcode } has been created with indetifier assigned: ${r.id}`))
+        .then(r =>res.status(httpStatus.CREATED).send({message:`resource SKU: ${ r.SKU } and Barcode: ${ r.barcode } has been created with indetifier assigned: ${r.id}`}))
         .catch(next);   
     }
 
@@ -36,10 +36,10 @@ export class ProductController implements IController<Product> {
         const id = Number.parseInt(req.params.id, 10);
         if(!isNaN(id)){
             this._service.delete(id)
-            .then(r =>res.status(httpStatus.OK).send(`resource ${id} has been deleted`))
+            .then(r =>res.status(httpStatus.OK).send({message:`resource ${id} has been deleted`}))
             .catch(next);
         } else {
-            res.status(httpStatus.BAD_REQUEST).send('a valid identifier is needed');
+            res.status(httpStatus.BAD_REQUEST).send({message:'a valid identifier is needed'});
         }
     }
     
@@ -53,10 +53,10 @@ export class ProductController implements IController<Product> {
         const id = Number.parseInt(req.params.id, 10);
         if(!isNaN(id)){
             this._service.getById(id)
-            .then(r =>(r) ?  res.status(httpStatus.OK).send(r) : res.status(httpStatus.NOT_FOUND).send('resource has not founded'))
+            .then(r =>(r) ?  res.status(httpStatus.OK).send(r) : res.status(httpStatus.NOT_FOUND).send({message:'resource has not founded'}))
             .catch(next);
         }else{
-            res.status(httpStatus.BAD_REQUEST).send('a valid identifier is needed');
+            res.status(httpStatus.BAD_REQUEST).send({message:'a valid identifier is needed'});
         }
     };
 }
