@@ -14,8 +14,8 @@ export class UserController implements IUserController {
 
     run = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         this._service.run(req.body)
-       .then(r => r ? res.status(httpStatus.OK).send(`user founded`) : res.status(httpStatus.NOT_FOUND).send(`user does not exist`))
-       .catch(next);   
+            .then(r => r ? res.status(httpStatus.OK).send({ message: `user founded` }) : res.status(httpStatus.NOT_FOUND).send({ message: `user does not exist` }))
+            .catch(next);
     }
 
 }
